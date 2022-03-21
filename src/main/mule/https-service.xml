@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="e65ce043-8d73-48fb-aa91-5d906e2e37c6" file="app.properties" />
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="ab4ead97-2418-4aca-ace9-4956eefc17f6" >
+		<http:listener-connection protocol="HTTPS" host="0.0.0.0" port="${https.port}" >
+			<tls:context >
+				<tls:key-store type="jks" path="keystore.jks" keyPassword="mulesoft" password="mulesoft" />
+			</tls:context>
+		</http:listener-connection>
+	</http:listener-config>
+	<flow name="https-serviceFlow" doc:id="4cf82a6f-6221-4e9c-a069-6bb463658f6b" >
+		<http:listener doc:name="Listener" doc:id="706568ec-100d-4cb4-85bb-59e3cc491ff8" config-ref="HTTP_Listener_config" path="/test"/>
+		<set-payload value="#['Tested']" doc:name="Set Payload" doc:id="f81d6f0d-7eef-40a5-be6d-38f91637b718" />
+	</flow>
+</mule>
